@@ -1,0 +1,104 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #111;
+  color: #f2f2f2;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* Background container */
+.lines {
+  position: fixed;
+  inset: 0;
+  width: 90vw;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.line {
+  width: 1px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.line::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 15vh;
+  top: -50%;
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0),
+      #fff 75%,
+      #fff);
+  animation: drop 3s cubic-bezier(0.4, 0.26, 0, 0.97) infinite;
+}
+
+/* Color + delay strategy */
+.line:nth-child(1)::after {
+  background: linear-gradient(to bottom, transparent, #FF4500);
+  animation-delay: 0.5s;
+}
+
+.line:nth-child(2)::after {
+  background: linear-gradient(to bottom, transparent, #32CD32);
+  animation-delay: 1s;
+}
+
+.line:nth-child(3)::after {
+  background: linear-gradient(to bottom, transparent, #1E90FF);
+  animation-delay: 1.5s;
+}
+
+.line:nth-child(4)::after {
+  background: linear-gradient(to bottom, transparent, #FFD700);
+  animation-delay: 2s;
+}
+
+.line:nth-child(5)::after {
+  background: linear-gradient(to bottom, transparent, #8A2BE2);
+  animation-delay: 2.5s;
+}
+
+.line:nth-child(6)::after {
+  background: linear-gradient(to bottom, transparent, #20B2AA);
+  animation-delay: 3s;
+}
+
+.line:nth-child(7)::after {
+  background: linear-gradient(to bottom, transparent, #DC143C);
+  animation-delay: 3.5s;
+}
+
+.line:nth-child(8)::after {
+  background: linear-gradient(to bottom, transparent, #00FA9A);
+  animation-delay: 4s;
+}
+
+.line:nth-child(9)::after {
+  background: linear-gradient(to bottom, transparent, #FF1493);
+  animation-delay: 4.5s;
+}
+
+.line:nth-child(10)::after {
+  background: linear-gradient(to bottom, transparent, #00BFFF);
+  animation-delay: 5s;
+}
+
+@keyframes drop {
+  from {
+    top: -50%;
+  }
+
+  to {
+    top: 110%;
+  }
+}

@@ -62,6 +62,16 @@ export default function SignupForm() {
                                 error={!!errors.name}
                                 helperText={errors.name?.message}
                                 fullWidth
+                                sx={{
+                                    input: { color: "#fff" },
+                                    label: { color: "#fff" },
+                                    "& label.Mui-focused": { color: "#fff" },
+                                    "& .MuiOutlinedInput-root": {
+                                        "& fieldset": { borderColor: "#fff" },
+                                        "&:hover fieldset": { borderColor: "#fff" },
+                                        "&.Mui-focused fieldset": { borderColor: "#fff" },
+                                    },
+                                }}
                             />
                         )}
                     />
@@ -83,6 +93,16 @@ export default function SignupForm() {
                                 error={!!error}
                                 helperText={error?.message ?? ""}
                                 fullWidth
+                                sx={{
+                                    input: { color: "#fff" },
+                                    label: { color: "#fff" },
+                                    "& label.Mui-focused": { color: "#fff" },
+                                    "& .MuiOutlinedInput-root": {
+                                        "& fieldset": { borderColor: "#fff" },
+                                        "&:hover fieldset": { borderColor: "#fff" },
+                                        "&.Mui-focused fieldset": { borderColor: "#fff" },
+                                    },
+                                }}
                             />
                         )}
                     />
@@ -99,6 +119,16 @@ export default function SignupForm() {
                                 error={!!errors.password}
                                 helperText={errors.password?.message}
                                 fullWidth
+                                sx={{
+                                    input: { color: "#fff" },
+                                    label: { color: "#fff" },
+                                    "& label.Mui-focused": { color: "#fff" },
+                                    "& .MuiOutlinedInput-root": {
+                                        "& fieldset": { borderColor: "#fff" },
+                                        "&:hover fieldset": { borderColor: "#fff" },
+                                        "&.Mui-focused fieldset": { borderColor: "#fff" },
+                                    },
+                                }}
                             />
                         )}
                     />

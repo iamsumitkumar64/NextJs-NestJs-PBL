@@ -19,9 +19,9 @@ import { useRouter } from "next/navigation";
 
 const TodoComp = () => {
     const dummyData: taskInterface[] = [
-        { id: 1, task: "Wash", description: "Clothes should be washed today", status: 1 },
-        { id: 2, task: "Bath", description: "Take a bath today", status: 2 },
-        { id: 3, task: "Learn", description: "Learn something new today", status: 3 }
+        // { id: 1, task: "Wash", description: "Clothes should be washed today", status: 1 },
+        // { id: 2, task: "Bath", description: "Take a bath today", status: 2 },
+        // { id: 3, task: "Learn", description: "Learn somjething new today", status: 3 }
     ];
 
     const router = useRouter();
@@ -30,24 +30,42 @@ const TodoComp = () => {
     const [taskValue, setTaskValue] = useState<string>("");
     const [descriptionValue, setDescriptionValue] = useState<string>("");
 
-    useEffect(() => {
+    const fetchTodos = async () => {
+        let result = await fetch(`http://localhost:2000/findTask`, { method: 'GET' });
+        const response = await result.json();
+        console.log(response)
+        if (response.length) {
+            response.forEach((currObj: taskInterface) => {
+                dummyData.push(currObj);
+            });
+        }
         setTasks(dummyData);
+    }
+
+    useEffect(() => {
+        fetchTodos();
     }, []);
 
-    const handleAddTask = () => {
+    const handleAddTask = async () => {
         if (!taskValue.trim() || !descriptionValue.trim()) {
             enqueueSnackbar("Task and description are required", { variant: "error" });
             return;
         }
-
-        setTasks(prev => [
-            ...prev,
-            {
-                id: Date.now(),
-                task: taskValue,
-                description: descriptionValue,
-                status: 1
+        const newTaskObj = {
+            id: Date.now(),
+            task: taskValue,
+            description: descriptionValue,
+            status: 1
+        };
+        await fetch(`http://localhost:2000/addTask`, {
+            method: 'POST',
+            body: JSON.stringify(newTaskObj),
+            headers: {
+                "content-type": "application/json"
             }
+        });
+        setTasks(prev => [
+            ...prev, newTaskObj
         ]);
         setTaskValue("");
         setDescriptionValue("");

@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
     const dispatch = useAppDispatch()
-    const router=useRouter();
+    const router = useRouter();
     const users = useAppSelector((state: RootState) => state.userReducer)
     const {
         control,
@@ -76,6 +76,16 @@ export default function LoginForm() {
                                 error={!!errors.email}
                                 helperText={errors.email?.message}
                                 fullWidth
+                                sx={{
+                                    input: { color: "#fff" },
+                                    label: { color: "#fff" },
+                                    "& label.Mui-focused": { color: "#fff" },
+                                    "& .MuiOutlinedInput-root": {
+                                        "& fieldset": { borderColor: "#fff" },
+                                        "&:hover fieldset": { borderColor: "#fff" },
+                                        "&.Mui-focused fieldset": { borderColor: "#fff" },
+                                    },
+                                }}
                             />
                         )}
                     />
@@ -92,6 +102,16 @@ export default function LoginForm() {
                                 error={!!errors.password}
                                 helperText={errors.password?.message}
                                 fullWidth
+                                sx={{
+                                    input: { color: "#fff" },
+                                    label: { color: "#fff" },
+                                    "& label.Mui-focused": { color: "#fff" },
+                                    "& .MuiOutlinedInput-root": {
+                                        "& fieldset": { borderColor: "#fff" },
+                                        "&:hover fieldset": { borderColor: "#fff" },
+                                        "&.Mui-focused fieldset": { borderColor: "#fff" },
+                                    },
+                                }}
                             />
                         )}
                     />

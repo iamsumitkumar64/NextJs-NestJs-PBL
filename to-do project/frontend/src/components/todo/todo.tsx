@@ -19,9 +19,9 @@ import { useRouter } from "next/navigation";
 
 const TodoComp = () => {
     const dummyData: taskInterface[] = [
-        // { id: 1, task: "Wash", description: "Clothes should be washed today", status: 1 },
-        // { id: 2, task: "Bath", description: "Take a bath today", status: 2 },
-        // { id: 3, task: "Learn", description: "Learn somjething new today", status: 3 }
+        { id: 1, task: "Wash", description: "Clothes should be washed today", status: 1 },
+        { id: 2, task: "Bath", description: "Take a bath today", status: 2 },
+        { id: 3, task: "Learn", description: "Learn somjething new today", status: 3 }
     ];
 
     const router = useRouter();

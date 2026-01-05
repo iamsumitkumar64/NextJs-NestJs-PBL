@@ -1,12 +1,13 @@
-import { Body, Controller, Get, Param, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Query } from "@nestjs/common";
 import { DeleteService } from "./delete.service";
+import DeleteDto from "./delete.dto";
 
 @Controller('/deleteTask')
 export class DeleteController {
     constructor(private readonly deleteService: DeleteService) { }
 
-    @Get(':id')
-    deleteTask(@Param() param: { id: number }, @Query() query: { id: number }) {
-        return this.deleteService.deleteTask(param.id || query.id);
+    @Delete()
+    deleteTask(@Query() query: DeleteDto) {
+        return this.deleteService.deleteTask(query.id);
     }
 }

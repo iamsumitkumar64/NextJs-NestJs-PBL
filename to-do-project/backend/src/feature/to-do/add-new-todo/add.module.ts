@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 import { AddController } from "./add.controller";
-import { RepoModule } from "src/infrastructure/repository/repo.module";
 import { AddService } from "./add.service";
+import { TaskRepository } from "src/infrastructure/repository/task.repository";
 
 @Module({
-    imports: [RepoModule],
+    imports: [],
     controllers: [AddController],
-    providers: [AddService],
+    providers: [AddService, TaskRepository],
     exports: [],
 })
 

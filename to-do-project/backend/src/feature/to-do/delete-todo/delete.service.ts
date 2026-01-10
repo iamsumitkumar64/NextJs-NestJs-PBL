@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { taskObject } from "src/domain/interfaces/tasks";
-import { RepoService } from "src/infrastructure/repository/repo.service";
+import { TaskRepository } from "src/infrastructure/repository/task.repository";
 
 @Injectable()
 export class DeleteService {
-    constructor(private readonly repo: RepoService) { }
+    constructor(private readonly repo: TaskRepository) { }
 
     deleteTask(id: number): taskObject[] {
         return this.repo.deleteTask(id);

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { taskObject } from "src/domain/interfaces/tasks";
 
 @Injectable()
-export class RepoService {
+export class TaskRepository {
     private tasks: taskObject[] = [];
 
     addTask(task: taskObject) {

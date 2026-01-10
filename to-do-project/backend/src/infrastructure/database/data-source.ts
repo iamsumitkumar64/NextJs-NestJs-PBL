@@ -1,6 +1,6 @@
-import TasksEntity from "src/domain/entities/tasks.entity";
-
 import { DataSource } from "typeorm";
+import UserEntity from "src/domain/entities/user.entity";
+import TasksEntity from "src/domain/entities/tasks.entity";
 
 const dataSource = new DataSource({
     type: 'postgres',
@@ -9,9 +9,9 @@ const dataSource = new DataSource({
     username: "sumit",
     password: "sumit123",
     database: "todo",
-    entities: [TasksEntity],
+    entities: [TasksEntity, UserEntity],
     synchronize: false,
-    migrations:['dist/infrastructure/database/migrations/*{.ts,.js}']
+    migrations: ['dist/infrastructure/database/migrations/*{.ts,.js}']
 })
 
 export { dataSource };

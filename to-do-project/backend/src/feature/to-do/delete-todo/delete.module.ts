@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 import { DeleteController } from "./delete.controller";
-import { RepoModule } from "src/infrastructure/repository/repo.module";
 import { DeleteService } from "./delete.service";
+import { TaskRepository } from "src/infrastructure/repository/task.repository";
 
 @Module({
-    imports: [RepoModule],
+    imports: [],
     controllers: [DeleteController],
-    providers: [DeleteService],
+    providers: [DeleteService,TaskRepository],
     exports: [],
 })
 

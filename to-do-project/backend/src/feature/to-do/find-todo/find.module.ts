@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 import { findController } from "./find.controller";
-import { RepoModule } from "src/infrastructure/repository/repo.module";
 import { findService } from "./find.service";
+import { TaskRepository } from "src/infrastructure/repository/task.repository";
 
 @Module({
-    imports: [RepoModule],
+    imports: [],
     controllers: [findController],
-    providers: [findService],
+    providers: [findService, TaskRepository],
     exports: [],
 })
 
-export class findModule { }
+export class FindModule { }

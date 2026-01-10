@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { taskObject } from "src/domain/interfaces/tasks";
-import { RepoService } from "src/infrastructure/repository/repo.service";
+import { TaskRepository } from "src/infrastructure/repository/task.repository";
 import AddDto from "./add.dto";
 
 @Injectable()
 export class AddService {
-    constructor(private readonly repo: RepoService) { }
+    constructor(private readonly repo: TaskRepository) { }
 
     addTask(newTaskToAdd: AddDto): string {
         this.repo.addTask(newTaskToAdd);

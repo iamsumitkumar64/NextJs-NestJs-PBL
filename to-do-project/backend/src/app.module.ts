@@ -2,17 +2,21 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AddModule } from './feature/to-do/add-new-todo/add.module';
-import { findModule } from './feature/to-do/find-todo/find.module';
+import { FindModule } from './feature/to-do/find-todo/find.module';
 import { DeleteModule } from './feature/to-do/delete-todo/delete.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSource } from './infrastructure/database/data-source';
+import { RegisterModule } from './feature/auth/register/register.module';
+import { LoginModule } from './feature/auth/login/login.module';
 
 @Module({
   imports: [
     AddModule,
-    findModule,
+    FindModule,
     DeleteModule,
+    RegisterModule,
+    LoginModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...dataSource.options,

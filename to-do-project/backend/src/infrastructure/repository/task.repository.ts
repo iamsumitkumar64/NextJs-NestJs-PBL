@@ -1,20 +1,32 @@
 import { Injectable } from "@nestjs/common";
+import TasksEntity from "src/domain/entities/tasks.entity";
+import { TaskStatusEnum } from "src/domain/enums/task-status";
 import { taskObject } from "src/domain/interfaces/tasks";
+import { DataSource, Repository } from "typeorm";
 
 @Injectable()
-export class TaskRepository {
-    private tasks: taskObject[] = [];
-
-    addTask(task: taskObject) {
-        this.tasks.push(task);
+export class TaskRepository extends Repository<TasksEntity> {
+    // private tasks: taskObject[] = [];
+    constructor(private dataSource: DataSource) {
+        super(TasksEntity, dataSource.createEntityManager())
     }
 
-    findTask() {
-        return this.tasks;
+    async addTask(todo: taskObject) {
+        const task = this.create(todo);
+        console.log(task)
+        await this.save(task);
+        return task;
     }
 
-    deleteTask(id: number) {
-        this.tasks = this.tasks.filter(curr => curr.id != id);
-        return this.tasks;
+    async findTask() {
+        return await this.find({});
+    }
+
+    async deleteTask(id: number) {
+        const task = await this.update(
+            { id, },
+            { status: TaskStatusEnum.Deleted }
+        );
+        return task;
     }
 }

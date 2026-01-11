@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { TaskStatusEnum } from "../enums/task-status";
 
-@Entity('task')
+@Entity('tasks')
 export default class TasksEntity {
     @PrimaryGeneratedColumn()
     id: number
@@ -11,11 +12,8 @@ export default class TasksEntity {
     @Column({ type: "varchar" })
     description: string
 
-    @Column({ type: "int" })
+    @Column({ type: "enum", enum: TaskStatusEnum })
     status: number
-
-    @Column({ type: "boolean" })
-    is_active: boolean;
 
     @CreateDateColumn()
     created_at: Date

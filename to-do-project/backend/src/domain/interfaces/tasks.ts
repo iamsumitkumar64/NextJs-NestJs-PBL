@@ -1,8 +1,6 @@
 interface taskObject {
-    id: number,
     task: string,
-    description: string,
-    status: number
+    description: string
 }
 
 export type { taskObject };

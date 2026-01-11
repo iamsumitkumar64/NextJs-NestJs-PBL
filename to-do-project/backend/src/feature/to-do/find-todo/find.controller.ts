@@ -1,7 +1,7 @@
-import { Body, Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Query } from "@nestjs/common";
 import { findService } from "./find.service";
 
-@Controller('/findTask')
+@Controller('/task')
 export class findController {
     constructor(private readonly findService: findService) { }
 

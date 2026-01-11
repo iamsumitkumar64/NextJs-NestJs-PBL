@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSource } from './infrastructure/database/data-source';
 import { RegisterModule } from './feature/auth/register/register.module';
 import { LoginModule } from './feature/auth/login/login.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -22,6 +23,11 @@ import { LoginModule } from './feature/auth/login/login.module';
       ...dataSource.options,
       retryAttempts: 10,
       retryDelay: 5000
+    }),
+    JwtModule.register({
+      global: true,
+      secret: "sumit123",
+      // signOptions: { expiresIn: '60m' },
     })
   ],
   controllers: [AppController],

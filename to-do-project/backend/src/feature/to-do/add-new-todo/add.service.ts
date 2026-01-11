@@ -5,10 +5,10 @@ import AddDto from "./add.dto";
 
 @Injectable()
 export class AddService {
-    constructor(private readonly repo: TaskRepository) { }
+    constructor(private readonly taskRepo: TaskRepository) { }
 
     addTask(newTaskToAdd: AddDto): string {
-        this.repo.addTask(newTaskToAdd);
+        this.taskRepo.addTask(newTaskToAdd);
         return 'Added';
     }
 }

@@ -3,7 +3,7 @@ import { AddService } from "./add.service";
 import type { taskObject } from "src/domain/interfaces/tasks";
 import AddDto from "./add.dto";
 
-@Controller('/addTask')
+@Controller('/task')
 export class AddController {
     constructor(private readonly addService: AddService) { }
 

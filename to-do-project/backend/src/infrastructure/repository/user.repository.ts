@@ -5,12 +5,12 @@ import { DataSource, Repository } from "typeorm";
 
 @Injectable()
 export class UserRepository extends Repository<UserEntity> {
-    constructor(private dataSource: DataSource) {
+    constructor(private readonly dataSource: DataSource) {
         super(UserEntity, dataSource.createEntityManager());
     }
 
     async register(body: RegisterDto) {
-        const user = await this.create(body);
+        const user = this.create(body);
         return await this.save(user);
     }
 

@@ -12,6 +12,6 @@ const dataSource = new DataSource({
     entities: [TasksEntity, UserEntity],
     synchronize: false,
     migrations: ['dist/infrastructure/database/migrations/*{.ts,.js}']
-})
+});
 
 export { dataSource };

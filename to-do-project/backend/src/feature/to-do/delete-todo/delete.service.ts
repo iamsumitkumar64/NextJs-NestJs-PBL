@@ -6,7 +6,7 @@ import { TaskRepository } from "src/infrastructure/repository/task.repository";
 export class DeleteService {
     constructor(private readonly repo: TaskRepository) { }
 
-    deleteTask(id: number): taskObject[] {
+    deleteTask(id: number) {
         return this.repo.deleteTask(id);
     }
 }

@@ -6,7 +6,7 @@ import { TaskRepository } from "src/infrastructure/repository/task.repository";
 export class findService {
     constructor(private readonly repo: TaskRepository) { }
 
-    findTask(): taskObject[] {
-        return this.repo.findTask();
+    async findTask() {
+        return await this.repo.findTask();
     }
 }

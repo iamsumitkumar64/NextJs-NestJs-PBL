@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AddModule } from './feature/to-do/add-new-todo/add.module';
@@ -10,6 +10,9 @@ import { dataSource } from './infrastructure/database/data-source';
 import { RegisterModule } from './feature/auth/register/register.module';
 import { LoginModule } from './feature/auth/login/login.module';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthMiddleware } from './infrastructure/middleware/auth.middleware';
+import { AuthService } from './infrastructure/utils/auth.service';
+import { UserRepository } from './infrastructure/repository/user.repository';
 
 @Module({
   imports: [
@@ -31,7 +34,13 @@ import { JwtModule } from '@nestjs/jwt';
     })
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService, UserRepository],
   exports: []
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes('task')
+  }
+}

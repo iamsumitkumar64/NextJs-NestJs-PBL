@@ -16,6 +16,7 @@ import style from "./style.module.css";
 import { taskInterface } from "./interface";
 import cookie from "js-cookie";
 import { useRouter } from "next/navigation";
+import { ApiCall } from "@/services/http";
 
 const TodoComp = () => {
     const dummyData: taskInterface[] = [
@@ -31,9 +32,7 @@ const TodoComp = () => {
     const [descriptionValue, setDescriptionValue] = useState<string>("");
 
     const fetchTodos = async () => {
-        let result = await fetch(`http://localhost:2000/findTask`, { method: 'GET' });
-        const response = await result.json();
-        console.log(response)
+        const response = await ApiCall(`http://localhost:3000/task`, 'GET');
         if (response.length) {
             response.forEach((currObj: taskInterface) => {
                 dummyData.push(currObj);
@@ -55,15 +54,10 @@ const TodoComp = () => {
             id: Date.now(),
             task: taskValue,
             description: descriptionValue,
-            status: 1
+            status: 1,
         };
-        await fetch(`http://localhost:2000/addTask`, {
-            method: 'POST',
-            body: JSON.stringify(newTaskObj),
-            headers: {
-                "content-type": "application/json"
-            }
-        });
+        const token = localStorage.getItem("token");
+        await ApiCall(`http://localhost:3000/task`, 'POST', token ?? undefined, JSON.stringify(newTaskObj));
         setTasks(prev => [
             ...prev, newTaskObj
         ]);
@@ -101,6 +95,7 @@ const TodoComp = () => {
 
     const handleLogOut = () => {
         cookie.remove("credentials");
+        cookie.remove("token");
         enqueueSnackbar("Log Out", { variant: "error" });
         router.push("/");
     }

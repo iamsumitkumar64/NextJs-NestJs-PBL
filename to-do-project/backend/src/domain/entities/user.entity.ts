@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import TasksEntity from "./tasks.entity";
 
 @Entity('users')
 export default class UserEntity {
@@ -17,12 +18,15 @@ export default class UserEntity {
     @Column({ type: "boolean", default: true })
     is_active: boolean;
 
+    @OneToMany(() => TasksEntity, (task) => task.user_id)
+    tasks: TasksEntity[]
+
     @CreateDateColumn()
-    created_at: Date
+    created_at: Date;
 
     @UpdateDateColumn()
-    updated_at: Date
+    updated_at: Date;
 
     @DeleteDateColumn()
-    deleted_at: Date
+    deleted_at: Date;
 }

@@ -18,6 +18,7 @@ import { enqueueSnackbar } from "notistack";
 import Cookies from "js-cookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { ApiCall } from "@/services/http";
 
 export default function LoginForm() {
     const dispatch = useAppDispatch()
@@ -34,9 +35,15 @@ export default function LoginForm() {
             password: "",
         },
     });
-    const onSubmit = (data: LoginInterface) => {
+
+    const onSubmit = async (data: LoginInterface) => {
         const is_user_exists = users.find((user) => ((user.email == data.email) && (user.password == data.password)));
-        if (is_user_exists) {
+        const response = await ApiCall(`http://localhost:3000/login`, 'POST', undefined, JSON.stringify({
+            email: data.email,
+            password: data.password
+        }),);
+        localStorage.setItem("token", response.access_token)
+        if (response || is_user_exists) {
             dispatch(currentUser(data))
             enqueueSnackbar('Login Success')
             Cookies.set("credentials", JSON.stringify(data));

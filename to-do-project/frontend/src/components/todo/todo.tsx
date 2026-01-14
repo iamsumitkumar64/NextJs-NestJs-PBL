@@ -20,9 +20,9 @@ import { ApiCall } from "@/services/http";
 
 const TodoComp = () => {
     const dummyData: taskInterface[] = [
-        { id: 1, task: "Wash", description: "Clothes should be washed today", status: 1 },
-        { id: 2, task: "Bath", description: "Take a bath today", status: 2 },
-        { id: 3, task: "Learn", description: "Learn somjething new today", status: 3 }
+        { id: 101, task: "Wash", description: "Clothes should be washed today", status: 1 },
+        { id: 102, task: "Bath", description: "Take a bath today", status: 2 },
+        { id: 103, task: "Learn", description: "Learn somjething new today", status: 3 }
     ];
 
     const router = useRouter();
@@ -32,7 +32,8 @@ const TodoComp = () => {
     const [descriptionValue, setDescriptionValue] = useState<string>("");
 
     const fetchTodos = async () => {
-        const response = await ApiCall(`http://localhost:3000/task`, 'GET');
+        const access_token = localStorage.getItem("token") || ""
+        const response = await ApiCall(`http://localhost:3000/task`, 'GET', access_token);
         if (response.length) {
             response.forEach((currObj: taskInterface) => {
                 dummyData.push(currObj);
@@ -51,15 +52,13 @@ const TodoComp = () => {
             return;
         }
         const newTaskObj = {
-            id: Date.now(),
             task: taskValue,
             description: descriptionValue,
-            status: 1,
         };
         const token = localStorage.getItem("token");
-        await ApiCall(`http://localhost:3000/task`, 'POST', token ?? undefined, JSON.stringify(newTaskObj));
+        const response = await ApiCall(`http://localhost:3000/task`, 'POST', token ?? "", JSON.stringify(newTaskObj));
         setTasks(prev => [
-            ...prev, newTaskObj
+            ...prev, response.task
         ]);
         setTaskValue("");
         setDescriptionValue("");
@@ -75,7 +74,9 @@ const TodoComp = () => {
         enqueueSnackbar("Task Completed", { variant: "success" });
     };
 
-    const handleDeleteTask = (id: number) => {
+    const handleDeleteTask = async (id: number) => {
+        const token = localStorage.getItem("token");
+        const response = await ApiCall(`http://localhost:3000/task?id=${id}`, 'DELETE', token ?? "");
         setTasks(prev =>
             prev.map(task =>
                 task.id === id ? { ...task, status: 3 } : task

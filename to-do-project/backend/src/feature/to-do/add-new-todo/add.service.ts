@@ -7,8 +7,11 @@ import AddDto from "./add.dto";
 export class AddService {
     constructor(private readonly taskRepo: TaskRepository) { }
 
-    addTask(newTaskToAdd: AddDto): string {
-        this.taskRepo.addTask(newTaskToAdd);
-        return 'Added';
+   async addTask(newTaskToAdd: AddDto) {
+        const task=await this.taskRepo.addTask(newTaskToAdd);
+        return {
+            message:"Task has been added",
+            task
+        };
     }
 }

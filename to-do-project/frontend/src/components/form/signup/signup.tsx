@@ -16,6 +16,7 @@ import { addUser } from "@/store/slices/add-user";
 import { enqueueSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ApiCall } from "@/services/http";
 
 export default function SignupForm() {
     const dispatch = useAppDispatch();
@@ -34,8 +35,13 @@ export default function SignupForm() {
         },
     });
 
-    const onSubmit = (data: SignupInterface) => {
+    const onSubmit = async (data: SignupInterface) => {
         if (!data) return;
+        const response=await ApiCall(`http://localhost:3000/register`, 'POST', undefined, JSON.stringify({
+            username: data.name,
+            email: data.email,
+            password: data.password
+        }),);
         dispatch(addUser(data));
         router.replace('/login');
         enqueueSnackbar('User Created Success')

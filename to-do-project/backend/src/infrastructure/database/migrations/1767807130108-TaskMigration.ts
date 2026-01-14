@@ -13,7 +13,7 @@ export class TaskMigration1767807130108 implements MigrationInterface {
                     { name: "id", type: "int", isPrimary: true, isGenerated: true, generationStrategy: "increment", },
                     { name: "task", type: "varchar", },
                     { name: "description", type: "varchar", },
-                    { name: "status", type: "enum", enumName: "TaskStatusEnum" },
+                    { name: "status", type: "enum", enumName: "TaskStatusEnum", default:"'1'" },
                     { name: "user_id", type: "int", isNullable: true },
                     { name: "created_at", type: "timestamp", default: "now()", },
                     { name: "updated_at", type: "timestamp", default: "now()", },

@@ -13,7 +13,7 @@ export default class TasksEntity {
     @Column({ type: "varchar" })
     description: string;
 
-    @Column({ type: "enum", enum: TaskStatusEnum })
+    @Column({ type: "enum", enum: TaskStatusEnum, default:TaskStatusEnum.Active })
     status: number;
 
     @ManyToOne(() => UserEntity, (user) => user.tasks)

@@ -42,8 +42,8 @@ export default function LoginForm() {
             email: data.email,
             password: data.password
         }),);
-        localStorage.setItem("token", response.access_token)
-        if (response || is_user_exists) {
+        if (response.access_token || is_user_exists) {
+            localStorage.setItem("token", response.access_token)
             dispatch(currentUser(data))
             enqueueSnackbar('Login Success')
             Cookies.set("credentials", JSON.stringify(data));

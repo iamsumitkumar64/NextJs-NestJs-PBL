@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 
-@Controller('/direct')
-export class DirectChatController {
+@Controller('/chat')
+export class ChatController {
 
 }

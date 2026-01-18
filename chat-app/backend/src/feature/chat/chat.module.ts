@@ -7,4 +7,4 @@ import { Module } from "@nestjs/common";
     exports: []
 })
 
-export class DirectChatModule { }
+export class ChatModule { }

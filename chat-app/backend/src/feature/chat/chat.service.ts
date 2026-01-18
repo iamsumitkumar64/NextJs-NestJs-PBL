@@ -1,3 +1,3 @@
-export class DirectChatService {
+export class ChatService {
 
 }

@@ -10,11 +10,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthMiddleware } from './infrastructure/middleware/auth.middleware';
 import { AuthService } from './infrastructure/utils/auth.service';
 import { UserRepository } from './infrastructure/repository/user.repository';
+import { UpdateProfileModule } from './feature/profile/update-profile/updateprofile.module';
 
 @Module({
   imports: [
     RegisterModule,
     LoginModule,
+    UpdateProfileModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...dataSource.options,
@@ -31,11 +33,11 @@ import { UserRepository } from './infrastructure/repository/user.repository';
   providers: [AppService, AuthService, UserRepository],
   exports: []
 })
-export class AppModule { }
-// export class AppModule implements NestModule {
-//   configure(consumer: MiddlewareConsumer) {
-//     consumer
-//       .apply(AuthMiddleware)
-//       .forRoutes('')
-//   }
-// }
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes('profile')
+  }
+}

@@ -11,6 +11,9 @@ export class AuthMiddleware implements NestMiddleware {
     ) { }
 
     async use(req: Request, res: Response, next: (error?: any) => void) {
+        if (!req.headers.authorization) {
+            throw new HttpException("Unexpected Access", HttpStatus.UNAUTHORIZED);
+        }
         const isAuthenticated = await this.jwtService.verifyJwtToken(req.headers.authorization ?? "");
         if (!isAuthenticated) {
             throw new HttpException("Invalid Access", HttpStatus.UNAUTHORIZED);
@@ -22,6 +25,7 @@ export class AuthMiddleware implements NestMiddleware {
         } else if (isUserExists && !isUserExists.is_active) {
             throw new HttpException("User Deactivated Account", HttpStatus.UNAUTHORIZED);
         }
+        req.user = isUserExists;
         next();
     }
 }

@@ -1,5 +1,5 @@
 import { RegisterDto } from "./register.dto";
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { UserRepository } from "src/infrastructure/repository/user.repository";
 import { AuthService } from "../../../infrastructure/utils/auth.service";
 
@@ -10,11 +10,11 @@ export class RegisterService {
     async registerUser(body: RegisterDto) {
         const filteredUser = await this.usersRepo.findUser(body.email);
         if (filteredUser) {
-            return "User with Email Already Exists";
+            throw new HttpException('User Exists with this email', HttpStatus.BAD_REQUEST);
         }
         const hashedPassword = await this.authService.hash(body.password);
         body.password = hashedPassword;
         await this.usersRepo.register(body);
-        return 'User Registered Success';
+        return { is_created: true };
     }
 }

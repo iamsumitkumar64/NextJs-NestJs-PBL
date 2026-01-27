@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import UserEntity from "./users.entity";
 import ConversationsEntity from "./conversations.entity";
 
@@ -11,9 +11,11 @@ export default class MessagesEntity {
     message: string
 
     @ManyToOne(() => UserEntity, (user) => user.messages)
+    @JoinColumn({ name: "sender_id" })
     sender_id: UserEntity
 
     @ManyToOne(() => ConversationsEntity, (conver) => conver.message_id)
+    @JoinColumn({ name: "conversation_id" })
     conversation_id: ConversationsEntity
 
     @CreateDateColumn()

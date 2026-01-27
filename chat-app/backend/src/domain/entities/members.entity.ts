@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import UserEntity from "./users.entity";
 import ConversationsEntity from "./conversations.entity";
 
@@ -8,9 +8,11 @@ export default class MembersEntity {
     id: number
 
     @ManyToOne(() => UserEntity, (user) => user.members)
+    @JoinColumn({ name: "user_id" })
     user_id: UserEntity
 
     @ManyToOne(() => ConversationsEntity, (conver) => conver.members)
+    @JoinColumn({ name: "conversation_id" })
     conversation_id: ConversationsEntity
 
     @CreateDateColumn()

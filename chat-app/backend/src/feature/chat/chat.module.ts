@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common";
+import { CreateChatModule } from "./create-chat/create-chat.module";
 
 @Module({
-    imports: [],
+    imports: [CreateChatModule],
     controllers: [],
     providers: [],
     exports: []

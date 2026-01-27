@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -11,12 +11,14 @@ import { AuthMiddleware } from './infrastructure/middleware/auth.middleware';
 import { AuthService } from './infrastructure/utils/auth.service';
 import { UserRepository } from './infrastructure/repository/user.repository';
 import { UpdateProfileModule } from './feature/profile/update-profile/updateprofile.module';
+import { ChatModule } from './feature/chat/chat.module';
 
 @Module({
   imports: [
     RegisterModule,
     LoginModule,
     UpdateProfileModule,
+    ChatModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...dataSource.options,
@@ -38,6 +40,13 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes('profile')
+      .exclude({
+        method:RequestMethod.ALL,
+        path:'login'
+      },{
+        method:RequestMethod.ALL,
+        path:'register'
+      })
+      .forRoutes('*')
   }
 }

@@ -18,6 +18,12 @@ export default class ConversationsEntity {
     @OneToMany(() => MembersEntity, (mem) => mem.conversation_id)
     members: MembersEntity[]
 
+    @Column({ type: "varchar", nullable: true })
+    dual_user_ids: string
+
+    @Column({ type: "bool", default: false })
+    is_group: boolean
+
     @CreateDateColumn()
     created_at: Date;
 

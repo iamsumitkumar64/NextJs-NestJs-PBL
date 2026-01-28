@@ -10,23 +10,33 @@ export class ConversationRepository extends Repository<ConversationsEntity> {
         super(ConversationsEntity, datasource.createEntityManager());
     }
 
-    async createConversation(user: UserEntity, body: CreateChatDto) {
+    async createDualConversation(user: UserEntity, body: CreateChatDto) {
         const conversation = this.create
-        (
-            {
-                creator_id: { id: user.id },
-                // members: body.receiver_id
-            }
-        );
+            (
+                {
+                    creator_id: { id: user.id },
+                    dual_user_ids: user.id + '_' + body.receiver_id
+                }
+            );
         return await this.save(conversation);
     }
 
-    async findConversation(id: number) {
+    async findConversation(id: number, sender_id: number, receiver_id: number) {
         const conversation = await this.find({
-            where: {
-                id: id
-            }
+            where: [
+                { id, dual_user_ids: sender_id + '_' + receiver_id },
+                { id, dual_user_ids: receiver_id + '_' + sender_id },]
         });
-        return conversation.length ? conversation : null;
+        return conversation.length ? conversation[0] : null;
+    }
+
+    async findConversationUsingUsers(sender_id: number, receiver_id: number) {
+        const conversation = await this.find({
+            where: [
+                { dual_user_ids: sender_id + '_' + receiver_id },
+                { dual_user_ids: receiver_id + '_' + sender_id },
+            ]
+        });
+        return conversation.length ? conversation[0] : null;
     }
 }

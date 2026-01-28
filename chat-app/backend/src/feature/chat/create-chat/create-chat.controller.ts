@@ -8,7 +8,7 @@ export class CreateChatController {
     constructor(private readonly createChatService: CreateChatService) { }
 
     @Post()
-    async createConversation(@Req() req: Request, @Body() body: CreateChatDto) {
-        await this.createChatService.createConversation(req.user, body);
+    async createDualConversation(@Req() req: Request, @Body() body: CreateChatDto) {
+        await this.createChatService.createDualConversation(req.user, body);
     }
 }

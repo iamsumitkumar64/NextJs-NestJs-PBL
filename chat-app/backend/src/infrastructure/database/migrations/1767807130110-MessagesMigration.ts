@@ -39,8 +39,8 @@ export class MessagesMigration1767807130400 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("messages", "USER_TABLE_REFERENCE");
-        await queryRunner.dropForeignKey("messages", "CONVERSATIONS_TABLE_REFERENCE");
+        await queryRunner.dropForeignKey("messages", "MESSAGE_USER_TABLE_REFERENCE");
+        await queryRunner.dropForeignKey("messages", "MESSAGE_CONVERSATIONS_TABLE_REFERENCE");
         await queryRunner.dropTable("messages", true);
     }
 }

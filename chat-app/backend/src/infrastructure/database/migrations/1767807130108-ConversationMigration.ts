@@ -10,6 +10,8 @@ export class ConversationsMigration1767807130200 implements MigrationInterface {
                 columns: [
                     { name: "id", type: "int", isPrimary: true, isGenerated: true, generationStrategy: "increment", },
                     { name: "creator_id", type: "int", },
+                    { name: "is_group", type: "bool", default: false },
+                    { name: "dual_user_ids", type: "varchar", isNullable: true },
                     { name: "created_at", type: "timestamp", default: "now()", },
                     { name: "updated_at", type: "timestamp", default: "now()", isNullable: true, },
                     { name: "deleted_at", type: "timestamp", isNullable: true, },

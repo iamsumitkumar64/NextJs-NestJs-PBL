@@ -38,8 +38,8 @@ export class MembersMigration1767807130300 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey("members", "USER_TABLE_REFERENCE");
-        await queryRunner.dropForeignKey("members", "CONVERSATIONS_TABLE_REFERENCE");
+        await queryRunner.dropForeignKey("members", "MEMBER_USER_TABLE_REFERENCE");
+        await queryRunner.dropForeignKey("members", "MEMBER_CONVERSATIONS_TABLE_REFERENCE");
         await queryRunner.dropTable("members", true);
     }
 }

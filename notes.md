@@ -1,5 +1,5 @@
 # Backend (NestJs)
-
+[Nest Learning Link Help](https://medium.com/@qasimali7566675/getting-started-with-nestjs-understanding-the-core-concepts-63a582a4282b)
 ---
 
 **Typeorm ->** Orm designed to be used as a wrapper around db connection and support multiple features like migration, seeding

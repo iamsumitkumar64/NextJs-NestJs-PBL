@@ -10,8 +10,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthMiddleware } from './infrastructure/middleware/auth.middleware';
 import { AuthService } from './infrastructure/utils/auth.service';
 import { UserRepository } from './infrastructure/repository/user.repository';
-import { UpdateProfileModule } from './feature/profile/update-profile/updateprofile.module';
-import { ChatModule } from './feature/chat/chat.module';
+import { UpdateProfileModule } from './feature/users/update-profile/updateprofile.module';
+import { ChatModule } from './feature/communication/chat.module';
+import { UserListModule } from './feature/users/get-user-list/user-list.module';
+import { conversationListModule } from './feature/communication/conversations/conversation-list/conversation-list.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { ChatModule } from './feature/chat/chat.module';
     LoginModule,
     UpdateProfileModule,
     ChatModule,
+    UserListModule,
+    conversationListModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...dataSource.options,
@@ -41,11 +45,11 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .exclude({
-        method:RequestMethod.ALL,
-        path:'login'
-      },{
-        method:RequestMethod.ALL,
-        path:'register'
+        method: RequestMethod.ALL,
+        path: 'login'
+      }, {
+        method: RequestMethod.ALL,
+        path: 'register'
       })
       .forRoutes('*')
   }

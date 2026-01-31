@@ -6,10 +6,11 @@ import { ResponseInterceptor } from './infrastructure/interceptor/response';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['*'],
+    origin: 'http://localhost:3000',
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  })
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'authorization'],
+  });
   app.useGlobalPipes(new ValidationPipe({
     forbidNonWhitelisted: true,
     forbidUnknownValues: true,
@@ -17,6 +18,6 @@ async function bootstrap() {
     transform: true,
   }));
   app.useGlobalInterceptors(new ResponseInterceptor());
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 4000);
 }
 bootstrap();

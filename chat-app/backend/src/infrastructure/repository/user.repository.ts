@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import UserEntity from "src/domain/entities/users.entity";
 import { RegisterDto } from "src/feature/auth/register/register.dto";
-import { UpdateProfileDto } from "src/feature/profile/update-profile/updateprofile.dto";
-import { DataSource, Repository } from "typeorm";
+import { UpdateProfileDto } from "src/feature/users/update-profile/updateprofile.dto";
+import { DataSource, Not, Repository } from "typeorm";
 
 @Injectable()
 export class UserRepository extends Repository<UserEntity> {
@@ -30,5 +30,21 @@ export class UserRepository extends Repository<UserEntity> {
         }, {
             ...body
         })
+    }
+
+    async getUserList(currentUser_id: number) {
+        return await this.find({
+            where: {
+                id: Not(currentUser_id),
+                is_active: true
+            },
+            select: {
+                id: true,
+                email: true,
+                is_online: true,
+                last_seen_at: true,
+                username: true
+            },
+        });
     }
 }

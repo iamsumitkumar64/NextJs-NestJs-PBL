@@ -11,13 +11,20 @@ export class AuthMiddleware implements NestMiddleware {
     ) { }
 
     async use(req: Request, res: Response, next: (error?: any) => void) {
-        if (!req.headers.authorization) {
-            throw new HttpException("Unexpected Access", HttpStatus.UNAUTHORIZED);
+        const token = req.headers.Authorization || req.headers.authorization;
+
+        //check token header
+        if (!token || Array.isArray(token)) {
+            throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
-        const isAuthenticated = await this.jwtService.verifyJwtToken(req.headers.authorization ?? "");
+
+        //check user's token authentication
+        const isAuthenticated = await this.jwtService.verifyJwtToken(token ?? '');
         if (!isAuthenticated) {
             throw new HttpException("Invalid Access", HttpStatus.UNAUTHORIZED);
         }
+
+        //check user refernce in DB
         const isUserExists = await this.userRepo.findUser(isAuthenticated.email);
 
         if (!isUserExists) {
@@ -25,6 +32,8 @@ export class AuthMiddleware implements NestMiddleware {
         } else if (isUserExists && !isUserExists.is_active) {
             throw new HttpException("User Deactivated Account", HttpStatus.UNAUTHORIZED);
         }
+
+        //mutate user in Req
         req.user = isUserExists;
         next();
     }

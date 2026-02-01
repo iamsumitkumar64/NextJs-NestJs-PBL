@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import OnlineDot from '../user-comp/user-state';
 import { ApiService } from '@/services/Api';
+import "./chat-component.css";
 
 export default function ConversationsList() {
     const [conversations, setConversations] = useState<any[] | null>(null);
@@ -13,7 +14,7 @@ export default function ConversationsList() {
     useEffect(() => {
         async function fetchData() {
             const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1bWl0QGdtYWlsLmNvbSIsImlhdCI6MTc2OTg2MTMxNn0.BYIWLhIzIGcUTnpqlEQoqhrFcoa-QB09D-2so70EvMI';
-            const result = await ApiService('http://localhost:4000/conversation', 'GET', access_token);
+            const result = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/conversation`, 'GET', access_token);
             setConversations(result.data.data);
         }
         fetchData();
@@ -24,7 +25,7 @@ export default function ConversationsList() {
     }
 
     return (
-        <List sx={{ overflowY: 'scroll', bgcolor: 'background.paper' }}>
+        <List className='conversation-list'>
             {conversations.map((conversation) => {
                 const member = conversation.members[0]?.user_id;
                 if (!member) return null;

@@ -1,9 +1,12 @@
+"use client"
+
 import { Button } from "@mui/material";
 import Link from "next/link";
+import './header-comp.css'
 
 export default function HeaderComponent() {
     return (
-        <>
+        <span className="header">
             <Button color="secondary">
                 <Link href={"/"}>
                     Home Page
@@ -19,6 +22,6 @@ export default function HeaderComponent() {
                     Chat List Page
                 </Link>
             </Button>
-        </>
+        </span>
     );
 }

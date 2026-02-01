@@ -1,8 +1,8 @@
 html,
 body {
-  max-width: 100vw;
-  max-height: 100vh;
-  /* overflow: hidden; */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 body {
@@ -20,6 +20,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   scrollbar-width: none;
   font-weight: 600;
+  overflow: hidden;
 }
 
 a {

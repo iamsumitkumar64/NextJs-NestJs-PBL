@@ -1,0 +1,15 @@
+/* User Component */
+
+.chat-users {
+    display: flex;
+    flex-direction: column;
+    background-color: #a49c8f;
+}
+
+.chat-users__list {
+    background-color: rgb(225, 225, 225);
+}
+
+.chat-users__item {
+    display: flex;
+}

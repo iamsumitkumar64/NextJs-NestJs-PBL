@@ -2,40 +2,23 @@
 
 import { Box, Typography } from '@mui/material';
 import { Props } from './interface';
+import './chat-component.css';
 
 export default function MessagesComponent({ messages, currentUserId }: Props) {
     return (
-        <Box
-            sx={{
-                minHeight: "88vh",
-                maxHeight: "88vh",
-                flex: 2,
-                p: 2,
-                bgcolor: '#a49c8f',
-                overflow: "scroll"
-            }}
-        >
+        <Box className="chat-messages">
             {messages.map((msg) => {
                 const isMe = msg.sender_id.id === currentUserId;
 
                 return (
                     <Box
                         key={msg.id}
-                        sx={{
-                            display: 'flex',
-                            justifyContent: isMe ? 'flex-end' : 'flex-start',
-                            mb: 1.2, overflow: "scroll"
-                        }}
+                        className={`chat-message ${isMe ? 'chat-message--me' : 'chat-message--other'
+                            }`}
                     >
                         <Box
-                            sx={{
-                                maxWidth: '70%',
-                                px: 1.5,
-                                py: 1,
-                                borderRadius: 2,
-                                bgcolor: isMe ? '#d9fdd3' : '#ffffff',
-                                boxShadow: '0 1px 1px rgba(0,0,0,0.15)',
-                            }}
+                            className={`chat-message__bubble ${isMe ? 'chat-message__bubble--me' : ''
+                                }`}
                         >
                             <Typography variant="body2">
                                 {msg.message}
@@ -43,12 +26,7 @@ export default function MessagesComponent({ messages, currentUserId }: Props) {
 
                             <Typography
                                 variant="caption"
-                                sx={{
-                                    display: 'block',
-                                    textAlign: 'right',
-                                    mt: 0.5,
-                                    color: 'text.secondary',
-                                }}
+                                className="chat-message__time"
                             >
                                 {new Date(msg.created_at).toLocaleTimeString([], {
                                     hour: '2-digit',

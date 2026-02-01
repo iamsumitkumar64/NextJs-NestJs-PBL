@@ -6,8 +6,8 @@ import UserEntity from "src/domain/entities/users.entity";
 export class MessageListService {
     constructor(private readonly messageRepo: MessageRepository) { }
 
-    async getmessageList(current_user: UserEntity) {
-        const messagesList = await this.messageRepo.getmessageList(current_user.id);
+    async getmessageList(current_user: UserEntity, conversation_id: number) {
+        const messagesList = await this.messageRepo.getmessageList(current_user.id, conversation_id);
         return messagesList.length ? { data: messagesList } : { data: [] };
     }
 }

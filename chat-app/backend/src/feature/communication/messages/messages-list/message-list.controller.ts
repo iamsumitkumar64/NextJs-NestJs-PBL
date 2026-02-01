@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from "@nestjs/common";
+import { Controller, Get, Param, Req } from "@nestjs/common";
 import type { Request } from "express";
 import { MessageListService } from "./message-list.service";
 
@@ -6,9 +6,8 @@ import { MessageListService } from "./message-list.service";
 export class MessageListController {
     constructor(private readonly getmessageListService: MessageListService) { }
 
-    @Get()
-    async getmessages(@Req() req: Request) {
-        const response = await this.getmessageListService.getmessageList(req.user);
-        return response;
+    @Get(":id")
+    async getmessages(@Req() req: Request, @Param("id") conversation_id: number) {
+        return await this.getmessageListService.getmessageList(req.user, conversation_id);
     }
 }

@@ -2,14 +2,16 @@ import * as z from 'zod';
 
 const messageSchema = z.object({
     id: z.string(),
-    text: z.string(),
-    senderId: z.string(),
-    createdAt: z.string()
+    message: z.string(),
+    sender_id: z.object({
+        id: z.number()
+    }),
+    created_at: z.string()
 });
 
 const propsSchema = z.object({
     messages: z.array(messageSchema),
-    currentUserId: z.string()
+    currentUserId: z.number()
 });
 
 type Message = z.infer<typeof messageSchema>;

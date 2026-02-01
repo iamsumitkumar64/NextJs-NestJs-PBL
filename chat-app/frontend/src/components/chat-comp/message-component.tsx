@@ -7,7 +7,8 @@ export default function MessagesComponent({ messages, currentUserId }: Props) {
     return (
         <Box
             sx={{
-                maxHeight:"100vh",
+                minHeight: "88vh",
+                maxHeight: "88vh",
                 flex: 2,
                 p: 2,
                 bgcolor: '#a49c8f',
@@ -15,7 +16,7 @@ export default function MessagesComponent({ messages, currentUserId }: Props) {
             }}
         >
             {messages.map((msg) => {
-                const isMe = msg.senderId === currentUserId;
+                const isMe = msg.sender_id.id === currentUserId;
 
                 return (
                     <Box
@@ -37,7 +38,7 @@ export default function MessagesComponent({ messages, currentUserId }: Props) {
                             }}
                         >
                             <Typography variant="body2">
-                                {msg.text}
+                                {msg.message}
                             </Typography>
 
                             <Typography
@@ -49,7 +50,7 @@ export default function MessagesComponent({ messages, currentUserId }: Props) {
                                     color: 'text.secondary',
                                 }}
                             >
-                                {new Date(msg.createdAt).toLocaleTimeString([], {
+                                {new Date(msg.created_at).toLocaleTimeString([], {
                                     hour: '2-digit',
                                     minute: '2-digit',
                                 })}

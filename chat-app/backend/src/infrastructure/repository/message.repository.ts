@@ -17,7 +17,20 @@ export class MessageRepository extends Repository<MessagesEntity> {
         return await this.save(messages);
     }
 
-    async getmessageList(currentUser_id: number) {
-        return await this.find({});
+    async getmessageList(currentUser_id: number, conversation_id: number) {
+        return await this.find({
+            relations: {
+                sender_id: true
+            },
+            where: {
+                conversation_id: { id: conversation_id }
+            },
+            select: {
+                id: true,
+                message: true,
+                created_at: true,
+                sender_id: { id: true }
+            }
+        });
     }
 }

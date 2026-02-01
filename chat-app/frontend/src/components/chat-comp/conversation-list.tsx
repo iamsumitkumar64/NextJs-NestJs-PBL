@@ -24,7 +24,7 @@ export default function ConversationsList() {
     }
 
     return (
-        <List sx={{ flex: 1, overflowY: 'auto', bgcolor: 'background.paper' }}>
+        <List sx={{ overflowY: 'scroll', bgcolor: 'background.paper' }}>
             {conversations.map((conversation) => {
                 const member = conversation.members[0]?.user_id;
                 if (!member) return null;

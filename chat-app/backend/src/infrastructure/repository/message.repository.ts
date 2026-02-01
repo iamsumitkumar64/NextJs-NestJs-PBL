@@ -16,4 +16,8 @@ export class MessageRepository extends Repository<MessagesEntity> {
         });
         return await this.save(messages);
     }
+
+    async getmessageList(currentUser_id: number) {
+        return await this.find({});
+    }
 }

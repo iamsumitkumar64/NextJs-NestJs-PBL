@@ -1,3 +1,4 @@
+'use client'
 import { Badge, Avatar, ListItemAvatar } from '@mui/material';
 
 type Props = {

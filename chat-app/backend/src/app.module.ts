@@ -14,6 +14,7 @@ import { UpdateProfileModule } from './feature/users/update-profile/updateprofil
 import { ChatModule } from './feature/communication/chat.module';
 import { UserListModule } from './feature/users/get-user-list/user-list.module';
 import { conversationListModule } from './feature/communication/conversations/conversation-list/conversation-list.module';
+import { MessageListModule } from './feature/communication/messages/messages-list/message-list.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { conversationListModule } from './feature/communication/conversations/co
     ChatModule,
     UserListModule,
     conversationListModule,
+    MessageListModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...dataSource.options,

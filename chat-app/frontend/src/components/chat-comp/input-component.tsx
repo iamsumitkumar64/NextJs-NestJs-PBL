@@ -5,10 +5,15 @@ import { ChangeEvent, useState } from "react";
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import SendIcon from '@mui/icons-material/Send';
 import "./chat-component.css";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { ApiService } from "@/services/Api";
+import { chatbodySchema } from "./interface";
 
 export default function InputComponent() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
     const [message, setMessage] = useState<string>("");
+    const currentConversation = useSelector((state: RootState) => state.conversationReducer);
 
     const handleEmojiOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(e.currentTarget);
@@ -22,10 +27,17 @@ export default function InputComponent() {
         setMessage(event.currentTarget.value);
     }
 
-    const SendMessage = () => {
+    const SendMessage = async () => {
         if (!message) {
             enqueueSnackbar("Empty Message");
         }
+        const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1bWl0QGdtYWlsLmNvbSIsImlhdCI6MTc2OTg2MTMxNn0.BYIWLhIzIGcUTnpqlEQoqhrFcoa-QB09D-2so70EvMI';
+        const chatbody = {
+            message: message,
+            receiver_id: currentConversation.receiver_id,
+            conversation_id: currentConversation.conversation_id
+        };
+        await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, 'POST', access_token, JSON.stringify(chatbody));
     }
 
     return (

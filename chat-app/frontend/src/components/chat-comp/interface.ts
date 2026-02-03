@@ -14,8 +14,14 @@ const propsSchema = z.object({
     currentUserId: z.number()
 });
 
+const chatbodySchema = z.object({
+    message: z.string(),
+    receiver_id: z.number(),
+    conversation_id: z.number(),
+});
+
 type Message = z.infer<typeof messageSchema>;
 type Props = z.infer<typeof propsSchema>;
 
-export { messageSchema, propsSchema };
+export { messageSchema, propsSchema, chatbodySchema };
 export type { Message, Props };

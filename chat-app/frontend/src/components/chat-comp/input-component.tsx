@@ -31,13 +31,13 @@ export default function InputComponent() {
         if (!message) {
             enqueueSnackbar("Empty Message");
         }
-        const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1bWl0QGdtYWlsLmNvbSIsImlhdCI6MTc2OTg2MTMxNn0.BYIWLhIzIGcUTnpqlEQoqhrFcoa-QB09D-2so70EvMI';
+        const access_token = localStorage.getItem("token")
         const chatbody = {
             message: message,
             receiver_id: currentConversation.receiver_id,
             conversation_id: currentConversation.conversation_id
         };
-        await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, 'POST', access_token, JSON.stringify(chatbody));
+        await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, 'POST', access_token || '', JSON.stringify(chatbody));
     }
 
     return (

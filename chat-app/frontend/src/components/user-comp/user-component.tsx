@@ -18,8 +18,8 @@ export default function UserComponent() {
 
     useEffect(() => {
         async function fetchData() {
-            const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1bWl0QGdtYWlsLmNvbSIsImlhdCI6MTc2OTg2MTMxNn0.BYIWLhIzIGcUTnpqlEQoqhrFcoa-QB09D-2so70EvMI';
-            const result = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, 'GET', access_token);
+            const access_token = localStorage.getItem("token")
+            const result = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, 'GET', access_token || '');
             setUsers(result.data.data);
         }
         fetchData();

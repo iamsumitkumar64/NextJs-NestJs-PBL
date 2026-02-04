@@ -13,11 +13,11 @@ export default function MessagesComponent({ messages, currentUserId }: Props) {
                 return (
                     <Box
                         key={msg.id}
-                        className={`chat-message ${!isMe ? 'chat-message--me' : 'chat-message--other'
+                        className={`chat-message ${isMe ? 'chat-message--me' : 'chat-message--other'
                             }`}
                     >
                         <Box
-                            className={`chat-message__bubble ${!isMe ? 'chat-message__bubble--me' : ''
+                            className={`chat-message__bubble ${isMe ? 'chat-message__bubble--me' : ''
                                 }`}
                         >
                             <Typography variant="body2">

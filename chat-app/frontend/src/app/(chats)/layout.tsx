@@ -20,8 +20,8 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
                 if (currentConversation.receiver_id == null && currentConversation.conversation_id == null) {
                     return;
                 }
-                const access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1bWl0QGdtYWlsLmNvbSIsImlhdCI6MTc2OTg2MTMxNn0.BYIWLhIzIGcUTnpqlEQoqhrFcoa-QB09D-2so70EvMI';
-                const res = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/message/${currentConversation.receiver_id || currentConversation.conversation_id}`, "GET", access_token);
+                const access_token = localStorage.getItem("token")
+                const res = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/message/${currentConversation.receiver_id || currentConversation.conversation_id}`, "GET", access_token || '');
                 setMessages(res.data.data);
                 socket.on('chat', (socketDtaa) => {
                     console.log(socketDtaa)

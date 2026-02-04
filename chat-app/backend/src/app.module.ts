@@ -18,13 +18,6 @@ import { MessageListModule } from './feature/communication/messages/messages-lis
 
 @Module({
   imports: [
-    RegisterModule,
-    LoginModule,
-    UpdateProfileModule,
-    ChatModule,
-    UserListModule,
-    conversationListModule,
-    MessageListModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...dataSource.options,
@@ -35,7 +28,16 @@ import { MessageListModule } from './feature/communication/messages/messages-lis
       global: true,
       secret: "sumit123",
       // signOptions: { expiresIn: '60m' },
-    })
+    }),
+
+    //
+    RegisterModule,
+    LoginModule,
+    UpdateProfileModule,
+    ChatModule,
+    UserListModule,
+    conversationListModule,
+    MessageListModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UserRepository],

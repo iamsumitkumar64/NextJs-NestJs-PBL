@@ -4,6 +4,7 @@ import { CreateChatDto } from './create-chat.dto';
 import UserEntity from 'src/domain/entities/users.entity';
 import { MemberRepository } from 'src/infrastructure/repository/members.repository';
 import { MessageRepository } from 'src/infrastructure/repository/message.repository';
+import { SocketService } from 'src/infrastructure/socket/socket';
 
 @Injectable()
 export class CreateChatService {
@@ -11,6 +12,7 @@ export class CreateChatService {
         private readonly conversationRepo: ConversationRepository,
         private readonly memberRepo: MemberRepository,
         private readonly messageRepo: MessageRepository,
+        private readonly socketService: SocketService,
     ) { }
 
     async createDualConversation(user: UserEntity, conversationInstance: CreateChatDto) {
@@ -42,6 +44,15 @@ export class CreateChatService {
 
         //insert messages
         const inserted_message = await this.messageRepo.insertMessage(user.id, conversation_id, conversationInstance.message);
+
+        // Emit Event When User Sent Message
+        this.socketService.handleRecievedMessage(
+            {
+                conversation_id: conversation_id,
+                message: conversationInstance.message,
+                receiver_id: conversationInstance.receiver_id
+            }
+        );
 
         return {
             message: "Message Sent Success",

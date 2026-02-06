@@ -3,7 +3,7 @@
 ---
 
 **Typeorm ->** Orm designed to be used as a wrapper around db connection and support multiple features like migration, seeding
-
+ 
 **Datasource ->** It holds your database connection settings and establishes the initials database.
 **Entity ->** A class maps to that database table and both(db table and entity) should have same columns
 **Migration ->** A file used in production containing queries to create/update a database schema instead of manual changes you just have to make changes and run this file. (for dev or production)

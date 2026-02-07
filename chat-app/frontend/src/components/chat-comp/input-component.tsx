@@ -37,7 +37,10 @@ export default function InputComponent() {
             receiver_id: currentConversation.receiver_id,
             conversation_id: currentConversation.conversation_id
         };
-        await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, 'POST', access_token || '', JSON.stringify(chatbody));
+        const cleanedData = Object.fromEntries(
+            Object.entries(chatbody).filter(([_, value]) => value != null) // Removes null/undefined
+        );
+        await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, 'POST', access_token || '', JSON.stringify(cleanedData));
     }
 
     return (

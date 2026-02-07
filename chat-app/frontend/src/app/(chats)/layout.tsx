@@ -13,6 +13,7 @@ import { socket } from "@/services/socket";
 const ChatLayout = ({ children }: { children: React.ReactNode }) => {
     const [messages, setMessages] = useState<any[]>([]);
     const currentConversation = useSelector((state: RootState) => state.conversationReducer);
+    const currentUser = useSelector((state: RootState) => state.currentuserReducer);
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -20,6 +21,7 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
                 if (currentConversation.receiver_id == null && currentConversation.conversation_id == null) {
                     return;
                 }
+                console.log(currentUser, currentConversation);
                 const access_token = localStorage.getItem("token")
                 const res = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/message/${currentConversation.receiver_id || currentConversation.conversation_id}`, "GET", access_token || '');
                 setMessages(res.data.data);
@@ -44,7 +46,7 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
                 {/* <Box> */}
                 <MessagesComponent
                     messages={messages}
-                    currentUserId={1}
+                    currentUserId={currentUser.user_id}
                 />
 
                 {/* Input Box */}

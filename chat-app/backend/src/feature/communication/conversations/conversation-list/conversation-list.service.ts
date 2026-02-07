@@ -7,7 +7,17 @@ export class ConversationListService {
     constructor(private readonly conversationRepo: ConversationRepository) { }
 
     async getconversationList(current_user: UserEntity) {
-        const conversationsList = await this.conversationRepo.getconversationList(current_user.id);
+        let conversationsList = await this.conversationRepo.getconversationList(current_user.id);
+        if (conversationsList.length) {
+            conversationsList = conversationsList.map(conv => (
+                {
+                    ...conv,
+                    members: conv.members.filter(
+                        m => m.user_id.id !== current_user.id
+                    )
+                }
+            ));
+        }
         return conversationsList.length ? { data: conversationsList } : { data: [] };
     }
 }

@@ -23,6 +23,7 @@ export class LoginService {
         const token = await this.authService.generateJwtToken(body.email);
         const response = {
             "access_token": token,
+            "user_id": user[0].id
         };
         return response;
     }

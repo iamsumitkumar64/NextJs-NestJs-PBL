@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import ConversationsEntity from 'src/domain/entities/conversations.entity';
 import UserEntity from 'src/domain/entities/users.entity';
 import { CreateChatDto } from 'src/feature/communication/create-chat/create-chat.dto';
-import { DataSource, In, Repository } from 'typeorm';
+import { DataSource, In, Like, Repository } from 'typeorm';
 
 @Injectable()
 export class ConversationRepository extends Repository<ConversationsEntity> {
@@ -21,11 +21,11 @@ export class ConversationRepository extends Repository<ConversationsEntity> {
         return await this.save(conversation);
     }
 
-    async findConversation(id: number, sender_id: number, receiver_id: number) {
+    async findConversation(id: number) {
         const conversation = await this.find({
-            where: [
-                { id, dual_user_ids: sender_id + '_' + receiver_id },
-                { id, dual_user_ids: receiver_id + '_' + sender_id },]
+            where: {
+                id: id
+            }
         });
         return conversation.length ? conversation[0] : null;
     }
@@ -41,13 +41,17 @@ export class ConversationRepository extends Repository<ConversationsEntity> {
     }
 
     async getconversationList(currentUser_id: number) {
+        const patterns = [
+            Like(`${currentUser_id}_%`),
+            Like(`%_${currentUser_id}`),
+        ];
+
         return await this.find({
             relations: { members: { user_id: true } },
-            where: {
-                members: {
-                    id: currentUser_id
-                },
-            },
+            where: [
+                { dual_user_ids: patterns[0] },
+                { dual_user_ids: patterns[1] },
+            ],
             select: {
                 id: true,
                 created_at: true,

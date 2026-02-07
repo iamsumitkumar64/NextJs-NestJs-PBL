@@ -16,9 +16,13 @@ import Cookies from "js-cookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { ApiService } from "@/services/Api";
- 
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { currentUser } from "@/store/slices/current_user";
+
 export default function LoginForm() {
     const router = useRouter();
+    const dispatch = useDispatch();
     const {
         control,
         handleSubmit,
@@ -39,6 +43,7 @@ export default function LoginForm() {
         if (response?.data?.access_token) {
             enqueueSnackbar('Login Success')
             localStorage.setItem("token", response.data.access_token)
+            dispatch(currentUser({ user_id: response.data.user_id }));
             Cookies.set("credentials", JSON.stringify(response.data.access_token));
             router.replace('/');
         }

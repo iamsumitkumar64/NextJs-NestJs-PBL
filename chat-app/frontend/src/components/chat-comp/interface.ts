@@ -11,7 +11,7 @@ const messageSchema = z.object({
 
 const propsSchema = z.object({
     messages: z.array(messageSchema),
-    currentUserId: z.number()
+    currentUserId: z.number().nullable()
 });
 
 const chatbodySchema = z.object({

@@ -36,7 +36,7 @@ export class CreateChatService {
             }
         } else {
             //check is conversation already valid or not
-            const validConversation = await this.conversationRepo.findConversation(conversation_id, user.id, conversationInstance.receiver_id);
+            const validConversation = await this.conversationRepo.findConversation(conversation_id);
             if (!validConversation) {
                 throw new HttpException("Invalid Conversation", HttpStatus.BAD_REQUEST);
             }

@@ -8,6 +8,7 @@ export class CreateChatDto {
     @IsString()
     message: string
 
+    @IsOptional()
     @IsNumber()
     receiver_id: number
 }

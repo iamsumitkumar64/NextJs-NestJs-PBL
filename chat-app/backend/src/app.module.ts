@@ -15,6 +15,8 @@ import { ChatModule } from './feature/communication/chat.module';
 import { UserListModule } from './feature/users/get-user-list/user-list.module';
 import { conversationListModule } from './feature/communication/conversations/conversation-list/conversation-list.module';
 import { MessageListModule } from './feature/communication/messages/messages-list/message-list.module';
+import { SocketModule } from './infrastructure/socket/socket.module';
+import { SetUserStatusModule } from './feature/users/set-user-status/setUserStatus.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { MessageListModule } from './feature/communication/messages/messages-lis
     UserListModule,
     conversationListModule,
     MessageListModule,
+    SetUserStatusModule,
+    SocketModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UserRepository],

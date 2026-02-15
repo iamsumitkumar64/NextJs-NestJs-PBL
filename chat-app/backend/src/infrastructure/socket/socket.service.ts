@@ -24,9 +24,14 @@ export class SocketService implements OnGatewayConnection {
 
     async handleConnection(client: Socket) {
         const token = client.handshake.auth.token;
+        if(!token){
+            console.log("Empty Token : Socket Handle Connection");
+            return;
+        }
         const tokenPayload: any = await this.authService.verifyJwtToken(token);
+        console.log(tokenPayload)
         if (tokenPayload) {
-            const user = await this.userRepo.findUser(tokenPayload);
+            const user = await this.userRepo.findUser(tokenPayload.email);
             if (user) {
                 this.activeUsers.set(String(user.id), client.id);
                 this.userRepo.setUserStatus(user.id, true);

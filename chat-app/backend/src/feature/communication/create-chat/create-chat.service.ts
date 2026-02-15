@@ -4,7 +4,7 @@ import { CreateChatDto } from './create-chat.dto';
 import UserEntity from 'src/domain/entities/users.entity';
 import { MemberRepository } from 'src/infrastructure/repository/members.repository';
 import { MessageRepository } from 'src/infrastructure/repository/message.repository';
-import { SocketService } from 'src/infrastructure/socket/socket';
+import { SocketService } from 'src/infrastructure/socket/socket.service';
 
 @Injectable()
 export class CreateChatService {

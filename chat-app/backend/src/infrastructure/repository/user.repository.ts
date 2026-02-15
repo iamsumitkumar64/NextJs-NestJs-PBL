@@ -47,4 +47,12 @@ export class UserRepository extends Repository<UserEntity> {
             },
         });
     }
+
+    async setUserStatus(user_id: number, status: boolean) {
+        return await this.update({
+            id: user_id
+        }, {
+            is_active: status
+        })
+    }
 }

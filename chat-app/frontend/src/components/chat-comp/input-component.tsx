@@ -30,6 +30,7 @@ export default function InputComponent() {
     const SendMessage = async () => {
         if (!message) {
             enqueueSnackbar("Empty Message");
+            return ;
         }
         const access_token = localStorage.getItem("token")
         const chatbody = {

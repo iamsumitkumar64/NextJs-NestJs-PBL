@@ -46,6 +46,13 @@ export default function InputComponent(props: any) {
         setMessage("");
     }
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            SendMessage();
+        }
+    };
+
     return (
         <Box className="chat-input">
             <TextField
@@ -55,6 +62,7 @@ export default function InputComponent(props: any) {
                 variant="standard"
                 value={message}
                 onChange={handleMessage}
+                onKeyDown={handleKeyDown}
             />
 
             <Button onClick={handleEmojiOpen} className="chat-input__button">

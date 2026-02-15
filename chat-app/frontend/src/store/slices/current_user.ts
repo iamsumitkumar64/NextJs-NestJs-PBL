@@ -10,7 +10,6 @@ export const currentUserSlice = createSlice({
     initialState,
     reducers: {
         currentUser: (state: currentUserSchemaType, action: PayloadAction<currentUserSchemaType>) => {
-            console.log(state.user_id);
             state.user_id = action.payload.user_id;
         }
     }

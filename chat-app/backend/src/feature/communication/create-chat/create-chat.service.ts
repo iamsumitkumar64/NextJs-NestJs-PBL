@@ -51,11 +51,7 @@ export class CreateChatService {
         // Emit Event When User Sent Message
         this.socketService.handleRecievedMessage(
             conversationInstance.receiver_id,
-            {
-                conversation_id: conversation_id,
-                message: conversationInstance.message,
-                receiver_id: conversationInstance.receiver_id
-            }
+            inserted_message
         );
 
         return {

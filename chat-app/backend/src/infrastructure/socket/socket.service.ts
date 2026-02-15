@@ -52,14 +52,13 @@ export class SocketService implements OnGatewayConnection {
     }
 
     @SubscribeMessage('onMessage')
-    handleRecievedMessage(receiver_id: number, @MessageBody() data: chatSocketDto) {
+    handleRecievedMessage(receiver_id: number, inserted_message: any) {
         const activeUserId = this.activeUsers.get(String(receiver_id));
-        console.log(this.activeUsers)
         if (!activeUserId) {
             console.log(`User ${receiver_id} not connected.`);
             return;
         }
-        this.server.to(activeUserId).emit('onMessage', { data: data })
+        this.server.to(activeUserId).emit('onMessage', { data: inserted_message })
     }
 
 }

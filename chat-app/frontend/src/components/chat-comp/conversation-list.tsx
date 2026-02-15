@@ -21,7 +21,6 @@ export default function ConversationsList() {
         async function fetchData() {
             const access_token = localStorage.getItem("token")
             const result = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/conversation`, 'GET', access_token || '');
-            console.log(result.data.data)
             setConversations(result.data.data);
         }
         fetchData();

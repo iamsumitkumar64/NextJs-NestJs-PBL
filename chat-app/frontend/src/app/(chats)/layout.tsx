@@ -17,6 +17,10 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         socket.on('onMessage', handleSocket);
+        return () => {
+            socket.off("onMessage");
+            socket.disconnect();
+        }
     }, []);
 
     useEffect(() => {
@@ -28,7 +32,6 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
             if (currentConversation.receiver_id == null && currentConversation.conversation_id == null) {
                 return;
             }
-            console.log(currentUser, currentConversation);
             const access_token = localStorage.getItem("token")
             const res = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/message/${currentConversation.receiver_id || currentConversation.conversation_id}`, "GET", access_token || '');
             setMessages(res.data.data);
@@ -36,7 +39,11 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
     };
 
     const handleSocket = (socketDtaa: any) => {
-        console.log(socketDtaa)
+        console.log(socketDtaa, messages)
+        // setMessages((oldMessages) => {
+        //     ...oldMessages,
+
+        // });
     }
 
     return (

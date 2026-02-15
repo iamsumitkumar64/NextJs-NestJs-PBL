@@ -16,12 +16,24 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
     const currentUser = useSelector((state: RootState) => state.currentuserReducer);
 
     useEffect(() => {
-        socket.on('onMessage', handleSocket);
+
+        const handleSocket = (socketData: any) => {
+
+            setMessages(prev => {
+                return [...prev, socketData?.data];
+            });
+
+        };
+
+        socket.on("onMessage", handleSocket);
+
         return () => {
-            socket.off("onMessage");
-            socket.disconnect();
-        }
+            socket.off("onMessage", handleSocket);
+        };
+
     }, []);
+
+
 
     useEffect(() => {
         fetchMessages();
@@ -38,13 +50,6 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
         } catch (err) { console.log(err) }
     };
 
-    const handleSocket = (socketDtaa: any) => {
-        console.log(socketDtaa, messages)
-        // setMessages((oldMessages) => {
-        //     ...oldMessages,
-
-        // });
-    }
 
     return (
         <Box className="chat-layout">

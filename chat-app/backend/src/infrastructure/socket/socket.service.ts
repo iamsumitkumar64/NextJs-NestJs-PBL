@@ -24,12 +24,11 @@ export class SocketService implements OnGatewayConnection {
 
     async handleConnection(client: Socket) {
         const token = client.handshake.auth.token;
-        if(!token){
+        if (!token) {
             console.log("Empty Token : Socket Handle Connection");
             return;
         }
         const tokenPayload: any = await this.authService.verifyJwtToken(token);
-        console.log(tokenPayload)
         if (tokenPayload) {
             const user = await this.userRepo.findUser(tokenPayload.email);
             if (user) {
@@ -52,8 +51,15 @@ export class SocketService implements OnGatewayConnection {
         }
     }
 
-    handleRecievedMessage(@MessageBody() data: chatSocketDto) {
-        this.server.emit('chat', { data: data });
+    @SubscribeMessage('onMessage')
+    handleRecievedMessage(receiver_id: number, @MessageBody() data: chatSocketDto) {
+        const activeUserId = this.activeUsers.get(String(receiver_id));
+        console.log(this.activeUsers)
+        if (!activeUserId) {
+            console.log(`User ${receiver_id} not connected.`);
+            return;
+        }
+        this.server.to(activeUserId).emit('onMessage', { data: data })
     }
 
 }

@@ -16,23 +16,28 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
     const currentUser = useSelector((state: RootState) => state.currentuserReducer);
 
     useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                if (currentConversation.receiver_id == null && currentConversation.conversation_id == null) {
-                    return;
-                }
-                console.log(currentUser, currentConversation);
-                const access_token = localStorage.getItem("token")
-                const res = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/message/${currentConversation.receiver_id || currentConversation.conversation_id}`, "GET", access_token || '');
-                setMessages(res.data.data);
-                socket.on('chat', (socketDtaa) => {
-                    console.log(socketDtaa)
-                });
-            } catch (err) { console.log(err) }
-        };
+        socket.on('onMessage', handleSocket);
+    }, []);
 
+    useEffect(() => {
         fetchMessages();
     }, [currentConversation]);
+
+    const fetchMessages = async () => {
+        try {
+            if (currentConversation.receiver_id == null && currentConversation.conversation_id == null) {
+                return;
+            }
+            console.log(currentUser, currentConversation);
+            const access_token = localStorage.getItem("token")
+            const res = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/message/${currentConversation.receiver_id || currentConversation.conversation_id}`, "GET", access_token || '');
+            setMessages(res.data.data);
+        } catch (err) { console.log(err) }
+    };
+
+    const handleSocket = (socketDtaa: any) => {
+        console.log(socketDtaa)
+    }
 
     return (
         <Box className="chat-layout">

@@ -37,6 +37,9 @@ export class CreateChatService {
         } else {
             //check is conversation already valid or not
             const validConversation = await this.conversationRepo.findConversation(conversation_id);
+            const userIds = validConversation?.dual_user_ids.split("_");
+            const receiverId = userIds?.find(id => id !== String(user.id));
+            conversationInstance.receiver_id = Number(receiverId ?? -1);
             if (!validConversation) {
                 throw new HttpException("Invalid Conversation", HttpStatus.BAD_REQUEST);
             }
@@ -47,6 +50,7 @@ export class CreateChatService {
 
         // Emit Event When User Sent Message
         this.socketService.handleRecievedMessage(
+            conversationInstance.receiver_id,
             {
                 conversation_id: conversation_id,
                 message: conversationInstance.message,

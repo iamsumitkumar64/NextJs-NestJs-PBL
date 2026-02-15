@@ -10,7 +10,7 @@ import { RootState } from "@/store";
 import { ApiService } from "@/services/Api";
 import { chatbodySchema } from "./interface";
 
-export default function InputComponent() {
+export default function InputComponent(props: any) {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
     const [message, setMessage] = useState<string>("");
     const currentConversation = useSelector((state: RootState) => state.conversationReducer);
@@ -30,7 +30,7 @@ export default function InputComponent() {
     const SendMessage = async () => {
         if (!message) {
             enqueueSnackbar("Empty Message");
-            return ;
+            return;
         }
         const access_token = localStorage.getItem("token")
         const chatbody = {
@@ -41,7 +41,9 @@ export default function InputComponent() {
         const cleanedData = Object.fromEntries(
             Object.entries(chatbody).filter(([_, value]) => value != null) // Removes null/undefined
         );
-        await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, 'POST', access_token || '', JSON.stringify(cleanedData));
+        let res = await ApiService(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, 'POST', access_token || '', JSON.stringify(cleanedData));
+        props.onAction(res.data.inserted_message);
+        setMessage("");
     }
 
     return (

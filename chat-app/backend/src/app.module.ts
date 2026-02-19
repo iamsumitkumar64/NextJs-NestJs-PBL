@@ -17,6 +17,7 @@ import { conversationListModule } from './feature/communication/conversations/co
 import { MessageListModule } from './feature/communication/messages/messages-list/message-list.module';
 import { SocketModule } from './infrastructure/socket/socket.module';
 import { SetUserStatusModule } from './feature/users/set-user-status/setUserStatus.module';
+import UploadModule from './feature/upload/upload.module';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { SetUserStatusModule } from './feature/users/set-user-status/setUserStat
       // signOptions: { expiresIn: '60m' },
     }),
 
-    //
+    // Features Module's
     RegisterModule,
     LoginModule,
     UpdateProfileModule,
@@ -42,6 +43,7 @@ import { SetUserStatusModule } from './feature/users/set-user-status/setUserStat
     MessageListModule,
     SetUserStatusModule,
     SocketModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UserRepository],

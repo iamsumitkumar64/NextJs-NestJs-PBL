@@ -9,6 +9,7 @@
 .chat-layout__sidebar {
     width: 20%;
     height: 95%;
+    overflow: scroll;
 }
 
 .chat-layout__content {

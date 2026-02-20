@@ -39,11 +39,11 @@ export default function SignupForm() {
             email: data.email,
             password: data.password
         }),);
-        if (response) {
+        if (!response.error) {
             router.replace('/login');
             enqueueSnackbar('User Created Success')
         } else {
-            enqueueSnackbar('Something Went Wrong');
+            enqueueSnackbar(response.message[0] || response.message || response.error || 'Something Went Wrong');
         }
     };
 

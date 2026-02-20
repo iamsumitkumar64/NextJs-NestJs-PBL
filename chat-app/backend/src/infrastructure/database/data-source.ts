@@ -1,10 +1,14 @@
-import { DataSource } from "typeorm";
+//Data-Source imports
+import { DataSource, DataSourceOptions } from "typeorm";
+import { SeederOptions } from 'typeorm-extension';
+
+//Entities
 import UserEntity from "src/domain/entities/users.entity";
 import ConversationsEntity from "src/domain/entities/conversations.entity";
 import MembersEntity from "src/domain/entities/members.entity";
 import MessagesEntity from "src/domain/entities/messages.entity";
 
-const dataSource = new DataSource({
+const options: DataSourceOptions & SeederOptions = {
     type: 'postgres',
     host: '127.0.0.1',
     port: 5432,
@@ -13,7 +17,13 @@ const dataSource = new DataSource({
     database: "chatAppDB",
     entities: [UserEntity, ConversationsEntity, MembersEntity, MessagesEntity],
     synchronize: false,
-    migrations: ['dist/infrastructure/database/migrations/*{.ts,.js}']
-});
+    migrations: ['dist/infrastructure/database/migrations/*{.ts,.js}'],
+
+    //fake data insertion path for seeding process
+    seeds: ['src/infrastructure/database/seed/**/*{.ts,.js}'],
+    factories: ['src/infrastructure/database/factory/**/*{.ts,.js}']
+};
+
+const dataSource = new DataSource(options);
 
 export { dataSource };

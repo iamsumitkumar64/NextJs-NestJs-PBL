@@ -21,7 +21,9 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm -- -d dist/infrastructure/database/data-source.js migration:generate src/infrastructure/database/migrations/InitMigration",
     "migration:run": "npm run typeorm -- -d dist/infrastructure/database/data-source.js migration:run",
-    "migration:revert": "npm run typeorm -- -d dist/infrastructure/database/data-source.js migration:revert"
+    "migration:revert": "npm run typeorm -- -d dist/infrastructure/database/data-source.js migration:revert",
+    "seed": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d src/infrastructure/database/data-source.ts",
+    "seed:prod": "node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d dist/infrastructure/database/data-source.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -41,11 +43,13 @@
     "pg": "^8.17.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.1"
+    "typeorm": "^0.3.1",
+    "typeorm-extension": "^3.8.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
+    "@faker-js/faker": "^10.3.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",

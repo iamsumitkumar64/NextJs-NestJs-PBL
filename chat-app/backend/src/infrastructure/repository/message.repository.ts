@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import MessagesEntity from "src/domain/entities/messages.entity";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, Like, Repository } from "typeorm";
 
 @Injectable()
 export class MessageRepository extends Repository<MessagesEntity> {
@@ -18,13 +18,28 @@ export class MessageRepository extends Repository<MessagesEntity> {
     }
 
     async getmessageList(currentUser_id: number, conversation_id: number) {
+        const patterns = [
+            Like(`${currentUser_id}_%`),
+            Like(`%_${currentUser_id}`),
+        ];
         return await this.find({
             relations: {
                 sender_id: true
             },
-            where: {
-                conversation_id: { id: conversation_id }
-            },
+            where: [
+                {
+                    conversation_id: {
+                        id: conversation_id,
+                        dual_user_ids: Like(`${currentUser_id}_%`)
+                    }
+                },
+                {
+                    conversation_id: {
+                        id: conversation_id,
+                        dual_user_ids: Like(`%_${currentUser_id}`)
+                    }
+                }
+            ],
             select: {
                 id: true,
                 message: true,

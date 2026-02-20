@@ -52,7 +52,7 @@ export class UserRepository extends Repository<UserEntity> {
         return await this.update({
             id: user_id
         }, {
-            is_active: status
+            is_online: status
         })
     }
 }
